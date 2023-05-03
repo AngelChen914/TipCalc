@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class TipCalc extends JFrame implements ActionListener, KeyListener {
@@ -34,7 +35,7 @@ public class TipCalc extends JFrame implements ActionListener, KeyListener {
     private void createUIComponents(){
         setContentPane(MainPanel);
         setTitle("Tip Calculator GUI");
-        setSize(300, 400);
+        setSize(500, 400);
         setLocation(450, 100);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         LessPeople.addActionListener(this);
@@ -51,13 +52,37 @@ public class TipCalc extends JFrame implements ActionListener, KeyListener {
             JButton button = (JButton) source;
             String text = button.getText();
             if(text.equals("-") && percent != 0){
-                percent--;
+                calculator.setTipPercentage(percent--);
                 textAreaTip.setText("" + percent);
             }else if(text.equals("+")){
-                percent++;
+                calculator.setTipPercentage(percent++);
                 textAreaTip.setText("" + percent);
+            }else if(text.equals("--") && numOfPeople != 0){
+                calculator.setNumberOfPeople(numOfPeople--);
+                textAreaPeople.setText("" + numOfPeople);
+            }else if(text.equals("++")){
+                calculator.setNumberOfPeople(numOfPeople++);
+                textAreaPeople.setText("" + numOfPeople);
             }
         }
+        bill = Double.parseDouble(textAreaBill.getText());
+        calculator = new TipCalculator(bill, percent, numOfPeople);
+        textArea1.setText("" + calculator.tipPerPerson());
+        textAreaTotal.setText("" + calculator.totalBill());
     }
 
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
 }
